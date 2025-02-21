@@ -59,31 +59,25 @@
         </div>
         <div class="amenities" role="menu">
           <h3>Amenities</h3>
-          <h4>&nbsp;</h4>
+          <h4 id="selected_amenities">&nbsp;</h4>
           <ul class="popover">
-            <li>Internet</li>
-            <li>TV</li>
-            <li>Kitchen</li>
-            <li>Iron</li>
+            {% for amenity in amenities.values() %}
+            <li>
+              <input
+                type="checkbox"
+                data-id="{{ amenity.id }}"
+                data-name="{{ amenity.name }}"
+              />
+              {{ amenity.name }}
+            </li>
+            {% endfor %}
           </ul>
         </div>
         <!--         
         <h3>States</h3>
         <h4>&nbsp;</h4>
-        <h3>Amenities</h3>
-        <h4 id="selected_amenities">&nbsp;</h4>
-        <ul>
-          {% for amenity in amenities.values() %}
-          <li>
-            <input
-              type="checkbox"
-              data-id="{{ amenity.id }}"
-              data-name="{{ amenity.name }}"
-            />
-            {{ amenity.name }}
-          </li>
-          {% endfor %}
-        </ul> -->
+
+        -->
       </section>
       <section class="places">
         <h1>Places</h1>

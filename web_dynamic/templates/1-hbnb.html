@@ -1,52 +1,113 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>AirBnB Clone</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../static/styles/4-common.css?{{ cache_id }}">
-    <link rel="stylesheet" type="text/css" href="../static/styles/3-header.css?{{ cache_id }}">
-    <link rel="stylesheet" type="text/css" href="../static/styles/5-filters.css?{{ cache_id }}">
-    <link rel="stylesheet" type="text/css" href="../static/styles/6-filters.css?{{ cache_id }}">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/styles/103-common.css?{{ cache_id }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/styles/103-header.css?{{ cache_id }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/styles/103-places.css?{{ cache_id }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/styles/103-filters.css?{{ cache_id }}"
+    />
     <script src="../static/scripts/1-hbnb.js?{{ cache_id }}"></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="logo"></div>
+      <div class="logo"></div>
     </header>
     <div class="container">
-        <section class="filters">
-            <h3>States</h3>
-            <h4>&nbsp;</h4>
-            <h3>Amenities</h3>
-            <h4 id="selected_amenities">&nbsp;</h4>
-            <ul>
-                {% for amenity in amenities.values() %}
-                <li>
-                    <input type="checkbox" data-id="{{ amenity.id }}" data-name="{{ amenity.name }}">
-                    {{ amenity.name }}
-                </li>
-                {% endfor %}
-            </ul>
-            <button>Search</button>
-        </section>
-        <section class="places">
-            <h1>Places</h1>
-            {% for place in places.values() %}
-            <article>
-                <h2>{{ place.name }}</h2>
-                <div class="price_by_night">${{ place.price_by_night }}</div>
-                <div class="information">
-                    <div class="max_guest">{{ place.max_guest }} Guests</div>
-                    <div class="number_rooms">{{ place.number_rooms }} Bedrooms</div>
-                    <div class="number_bathrooms">{{ place.number_bathrooms }} Bathrooms</div>
-                </div>
-                <div class="description">
-                    {{ place.description | safe }}
-                </div>
-            </article>
-            {% endfor %}
-        </section>
+      <section class="filters">
+        <button title="search button">Search</button>
+        <div class="locations" role="menu">
+          <h3>States</h3>
+          <h4>&nbsp;</h4>
+          <ul class="popover">
+            <li>
+              <h2>Arizona:</h2>
+            </li>
+            <li>
+              <ul>
+                <li>Page</li>
+                <li>Page2</li>
+              </ul>
+            </li>
+            <li>
+              <h2>California:</h2>
+            </li>
+            <li>
+              <ul>
+                <li>San Francisco</li>
+                <li>Los Altos</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="amenities" role="menu">
+          <h3>Amenities</h3>
+          <h4>&nbsp;</h4>
+          <ul class="popover">
+            <li>Internet</li>
+            <li>TV</li>
+            <li>Kitchen</li>
+            <li>Iron</li>
+          </ul>
+        </div>
+        <!--         
+        <h3>States</h3>
+        <h4>&nbsp;</h4>
+        <h3>Amenities</h3>
+        <h4 id="selected_amenities">&nbsp;</h4>
+        <ul>
+          {% for amenity in amenities.values() %}
+          <li>
+            <input
+              type="checkbox"
+              data-id="{{ amenity.id }}"
+              data-name="{{ amenity.name }}"
+            />
+            {{ amenity.name }}
+          </li>
+          {% endfor %}
+        </ul> -->
+      </section>
+      <section class="places">
+        <h1>Places</h1>
+        {% for place in places.values() %}
+        <article>
+          <div class="top_article">
+            <h2>{{ place.name }}</h2>
+            <div class="price_by_night">
+              <h3>${{ place.price_by_night }}</h3>
+            </div>
+          </div>
+
+          <div class="information">
+            <div class="max_guest"><h3>{{ place.max_guest }} Guests</div>
+            <div class="number_rooms"><h3>{{ place.number_rooms }} Bedrooms</h3></div>
+            <div class="number_bathrooms">
+              <h3>{{ place.number_bathrooms }} Bathrooms</h3>
+            </div>
+          </div>
+
+          <div class="description"><p>{{ place.description | safe }}</p></div>
+        </article>
+        {% endfor %}
+      </section>
     </div>
-</body>
+  </body>
 </html>

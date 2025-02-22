@@ -1,9 +1,25 @@
 header {
-    height: 70px; 
-    width: 100%;
-    border-bottom: 1px solid #575757;
-    background: white url(../images/logo.png);
-    background-repeat: no-repeat;
-    background-position: 20px center;
-    flex-shrink: 0;
+  height: 70px;
+  width: 100%;
+  border-bottom: 1px solid #575757;
+  background: white url(../images/logo.png);
+  background-repeat: no-repeat;
+  background-position: 20px center;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+header #api_status {
+  margin-left: auto;
+  margin-right: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #cccccc;
+}
+
+header #api_status.available {
+  background-color: #ff545f;
 }

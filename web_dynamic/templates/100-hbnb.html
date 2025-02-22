@@ -59,6 +59,7 @@
               <ul>
                 {% for city in cities %}
                 <li>
+                  {% if city.state_id == state.id %}
                   <input
                     type="checkbox"
                     id="city_filter"
@@ -66,7 +67,7 @@
                     data-name="{{city.name}}"
                   />{{ city.name }}
                 </li>
-                {% endfor %}
+                {% endif %} {% endfor %}
               </ul>
             </li>
             {% endfor %}

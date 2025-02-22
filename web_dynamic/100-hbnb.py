@@ -18,11 +18,13 @@ def close_db(exception):
 def hbnb():
     """Render the 100-hbnb.html template"""
     cache_id = str(uuid4())  # Generate a unique cache ID
-    states = storage.all("State")
-    amenities = storage.all("Amenity")
+    states = storage.all("State").values()
+    amenities = storage.all("Amenity").values()
+    cities = storage.all("City").values()
     return render_template('100-hbnb.html',
                            states=states,
                            amenities=amenities,
+                           cities=cities,
                            cache_id=cache_id)
 
 

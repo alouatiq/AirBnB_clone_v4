@@ -3,89 +3,81 @@ $(document).ready(function () {
     const selectedStates = {};
     const selectedCities = {};
 
-    // Function to update the selected amenities display
-    const updateSelectedAmenities = () => {
-        const amenityNames = Object.values(selectedAmenities).join(', ');
-        $('#selected_amenities').text(amenityNames);
-    };
-
-    // Function to update the selected locations display
-    const updateSelectedLocations = () => {
-        const selectedLocationNames = [
-            ...Object.values(selectedStates),
-            ...Object.values(selectedCities)
-        ].join(', ');
-
-        $('#selected_locations').text(selectedLocationNames);
-    };
-
-    $('input[type=checkbox]').change(function () {
-        const id = $(this).data('id');
-        const name = $(this).data('name');
-        const type = $(this).data('type');
-
-        if (this.checked) {
-            if (type === 'amenity') selectedAmenities[id] = name;
-            else if (type === 'state') selectedStates[id] = name;
-            else if (type === 'city') selectedCities[id] = name;
+    // API status check
+    $.get('http://0.0.0.0:5001/api/v1/status/', function (data) {
+        if (data.status === 'OK') {
+            $('#api_status').addClass('available');
         } else {
-            if (type === 'amenity') delete selectedAmenities[id];
-            else if (type === 'state') delete selectedStates[id];
-            else if (type === 'city') delete selectedCities[id];
+            $('#api_status').removeClass('available');
         }
-
-        updateSelectedAmenities();
-        updateSelectedLocations(); // Update selected locations when states or cities change
     });
 
-    const apiUrlStatus = 'http://127.0.0.1:5001/api/v1/status/';
-    const updateApiStatus = () => {
+    // Function to update locations display
+    function updateLocationsDisplay() {
+        const locations = [
+            ...Object.values(selectedStates),
+            ...Object.values(selectedCities)
+        ];
+        $('#selected_locations').text(locations.join(', ') || '\u00A0');
+    }
+
+    // Handle state selection
+    $('input#state_filter').change(function () {
+        const stateId = $(this).attr('data-id');
+        const stateName = $(this).attr('data-name');
+
+        if ($(this).is(':checked')) {
+            selectedStates[stateId] = stateName;
+        } else {
+            delete selectedStates[stateId];
+        }
+
+        updateLocationsDisplay();
+    });
+
+    // Handle city selection
+    $('input#city_filter').change(function () {
+        const cityId = $(this).attr('data-id');
+        const cityName = $(this).attr('data-name');
+
+        if ($(this).is(':checked')) {
+            selectedCities[cityId] = cityName;
+        } else {
+            delete selectedCities[cityId];
+        }
+
+        updateLocationsDisplay();
+    });
+
+    // Handle amenities selection
+    $('input#amenity_filter').change(function () {
+        const amenityId = $(this).attr('data-id');
+        const amenityName = $(this).attr('data-name');
+
+        if ($(this).is(':checked')) {
+            selectedAmenities[amenityId] = amenityName;
+        } else {
+            delete selectedAmenities[amenityId];
+        }
+
+        $('#selected_amenities').text(Object.values(selectedAmenities).join(', ') || '\u00A0');
+    });
+
+    // Function to fetch and display places
+    function fetchPlaces(filters = {}) {
+        $('.places').empty();
+        $('.places').append('<h1>Places</h1>');
+
         $.ajax({
-            type: 'GET',
-            url: apiUrlStatus,
-            success: (data) => {
-                if (data.status === 'OK') {
-                    $('#api_status').addClass('available');
-                } else {
-                    $('#api_status').removeClass('available');
-                }
-            },
-            error: () => {
-                $('#api_status').removeClass('available');
-            }
-        });
-    };
-
-    const apiUrlPlacesSearch = 'http://127.0.0.1:5001/api/v1/places_search/';
-
-    const updatePlaces = () => {
-        const requestData = {
-            amenities: Object.keys(selectedAmenities),
-            states: Object.keys(selectedStates),
-            cities: Object.keys(selectedCities)
-        };
-
-        $.ajax({
+            url: 'http://0.0.0.0:5001/api/v1/places_search/',
             type: 'POST',
-            url: apiUrlPlacesSearch,
             contentType: 'application/json',
-            data: JSON.stringify(requestData),
-            success: (data) => {
-                displayPlaces(data);
-            },
-            error: () => {
-                console.error('Error loading places.');
-            }
-        });
-    };
-
-    const displayPlaces = (places) => {
-        const placesSection = $('.places');
-        placesSection.empty();
-
-        places.forEach((place) => {
-            const article = $('<article></article>');
-            article.append(`<div class="top_article">
+            data: JSON.stringify(filters),
+            success: function (data) {
+                for (const place of data) {
+                    const placeHTML = `
+                        <article>
+                            <div class="top_article">
                                 <h2>${place.name}</h2>
                                 <div class="price_by_night">
                                     <h3>${place.price_by_night}</h3>
@@ -100,16 +92,25 @@ $(document).ready(function () {
 
                             <div class="description">
                                 <p>${place.description}</p>
-                            </div>`);
-
-            placesSection.append(article);
+                            </div>
+                        </article>
+                    `;
+                    $('.places').append(placeHTML);
+                }
+            }
         });
-    };
+    }
 
-    updateApiStatus();
-    updatePlaces();
+    // Initial fetch (no filters)
+    fetchPlaces();
 
-    $('button').click(() => {
-        updatePlaces();
+    // Fetch places when the Search button is clicked
+    $('#filter_btn').click(function () {
+        const filterData = {
+            amenities: Object.keys(selectedAmenities),
+            states: Object.keys(selectedStates),
+            cities: Object.keys(selectedCities)
+        };
+        fetchPlaces(filterData);
     });
 });

@@ -41,7 +41,7 @@
         <button title="search button" id="filter_btn">Search</button>
         <div class="locations" role="menu">
           <h3>States</h3>
-          <h4>&nbsp;</h4>
+          <h4 id="selected_locations">&nbsp;</h4>
           <ul class="popover">
             {% for state in states %}
             <li>
@@ -49,15 +49,15 @@
                 <input
                   type="checkbox"
                   id="state_filter"
-                  data-id="{{state[0].id}}"
-                  data-name="{{state[0].name}}"
+                  data-id="{{state.id}}"
+                  data-name="{{state.name}}"
                 />
-                {{ state[0].name }}:
+                {{ state.name }}:
               </h2>
             </li>
             <li>
               <ul>
-                {% for city in state[1] %}
+                {% for city in cities %}
                 <li>
                   <input
                     type="checkbox"
@@ -77,10 +77,11 @@
           <h3>Amenities</h3>
           <h4 id="selected_amenities">&nbsp;</h4>
           <ul class="popover">
-            {% for amenity in amenities.values() %}
+            {% for amenity in amenities %}
             <li>
               <input
                 type="checkbox"
+                id="amenity_filter"
                 data-id="{{ amenity.id }}"
                 data-name="{{ amenity.name }}"
               />

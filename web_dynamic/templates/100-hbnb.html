@@ -43,26 +43,36 @@
           <h3>States</h3>
           <h4>&nbsp;</h4>
           <ul class="popover">
+            {% for state in states %}
             <li>
-              <h2>Arizona:</h2>
+              <h2>
+                <input
+                  type="checkbox"
+                  id="state_filter"
+                  data-id="{{state[0].id}}"
+                  data-name="{{state[0].name}}"
+                />
+                {{ state[0].name }}:
+              </h2>
             </li>
             <li>
               <ul>
-                <li>Page</li>
-                <li>Page2</li>
+                {% for city in state[1] %}
+                <li>
+                  <input
+                    type="checkbox"
+                    id="city_filter"
+                    data-id="{{city.id}}"
+                    data-name="{{city.name}}"
+                  />{{ city.name }}
+                </li>
+                {% endfor %}
               </ul>
             </li>
-            <li>
-              <h2>California:</h2>
-            </li>
-            <li>
-              <ul>
-                <li>San Francisco</li>
-                <li>Los Altos</li>
-              </ul>
-            </li>
+            {% endfor %}
           </ul>
         </div>
+
         <div class="amenities" role="menu">
           <h3>Amenities</h3>
           <h4 id="selected_amenities">&nbsp;</h4>
@@ -79,12 +89,8 @@
             {% endfor %}
           </ul>
         </div>
-        <!--         
-        <h3>States</h3>
-        <h4>&nbsp;</h4>
-
-        -->
       </section>
+
       <section class="places">
         <h1>Places</h1>
       </section>

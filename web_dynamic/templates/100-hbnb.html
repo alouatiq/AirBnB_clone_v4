@@ -57,9 +57,8 @@
             </li>
             <li>
               <ul>
-                {% for city in cities %}
+                {% for city in cities %} {% if city.state_id == state.id %}
                 <li>
-                  {% if city.state_id == state.id %}
                   <input
                     type="checkbox"
                     id="city_filter"

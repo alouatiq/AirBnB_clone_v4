@@ -13,7 +13,7 @@ article {
   width: 390px;
   padding: 20px;
   margin: 20px 20px 20px 20px;
-  border: 1px solid #aa0004;
+  border: 1px solid #ff545f;
   border-radius: 4px;
   position: relative;
   z-index: -1;
@@ -35,8 +35,8 @@ article > h2 {
 }
 
 .price_by_night {
-  color: #aa0004;
-  border: 4px solid #aa0004;
+  color: #ff545f;
+  border: 4px solid #ff545f;
   border-radius: 100%;
   min-width: 60px;
   height: 60px;

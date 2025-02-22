@@ -15,10 +15,10 @@
       href="../static/styles/3-header.css?{{ cache_id }}"
     />
     <link
-    rel="stylesheet"
-    type="text/css"
-    href="../static/styles/3-footer.css?{{ cache_id }}"
-  />
+      rel="stylesheet"
+      type="text/css"
+      href="../static/styles/3-footer.css?{{ cache_id }}"
+    />
     <link
       rel="stylesheet"
       type="text/css"
@@ -97,8 +97,10 @@
           </div>
 
           <div class="information">
-            <div class="max_guest"><h3>{{ place.max_guest }} Guests</div>
-            <div class="number_rooms"><h3>{{ place.number_rooms }} Bedrooms</h3></div>
+            <div class="max_guest"><h3>{{ place.max_guest }} Guests</h3></div>
+            <div class="number_rooms">
+              <h3>{{ place.number_rooms }} Bedrooms</h3>
+            </div>
             <div class="number_bathrooms">
               <h3>{{ place.number_bathrooms }} Bathrooms</h3>
             </div>

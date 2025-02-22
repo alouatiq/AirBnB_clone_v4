@@ -34,15 +34,21 @@ $(document).ready(function () {
             for (const place of data) {
                 const placeHTML = `
                     <article>
-                        <h2>${place.name}</h2>
-                        <div class="price_by_night">$${place.price_by_night}</div>
-                        <div class="information">
-                            <div class="max_guest">${place.max_guest} Guests</div>
-                            <div class="number_rooms">${place.number_rooms} Bedrooms</div>
-                            <div class="number_bathrooms">${place.number_bathrooms} Bathrooms</div>
+                        <div class="top_article">
+                            <h2>${place.name}</h2>
+                            <div class="price_by_night">
+                                <h3>${place.price_by_night}</h3>
+                            </div>
                         </div>
+
+                        <div class="information">
+                            <div class="max_guest"><h3>${place.max_guest} Guests</h3></div>
+                            <div class="number_rooms"><h3>${place.number_rooms} Bedrooms</h3></div>
+                            <div class="number_bathrooms"><h3>${place.number_bathrooms} Bathrooms</h3></div>
+                        </div>
+
                         <div class="description">
-                            ${place.description}
+                            <p>${place.description}</p>
                         </div>
                     </article>
                 `;

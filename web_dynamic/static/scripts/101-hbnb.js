@@ -45,9 +45,11 @@ $(document).ready(function () {
                                 <div class="number_rooms">${place.number_rooms} Bedrooms</div>
                                 <div class="number_bathrooms">${place.number_bathrooms} Bathrooms</div>
                             </div>
-                            <div class="description">
-                                ${place.description}
-                            </div>
+                            <div class="description">${place.description}</div>
+                            <section class="reviews">
+                                <h2>Reviews <span class="toggle_reviews" data-id="${place.id}">show</span></h2>
+                                <ul class="reviews_list" id="reviews_${place.id}"></ul>
+                            </section>
                         </article>
                     `;
                     $('.places').append(placeHTML);
@@ -66,17 +68,19 @@ $(document).ready(function () {
     });
 
     // Toggle Reviews
-    $('#toggle_reviews').click(function () {
+    $(document).on('click', '.toggle_reviews', function () {
         const toggleBtn = $(this);
-        const reviewsList = $('#reviews_list');
+        const placeId = toggleBtn.attr('data-id');
+        const reviewsList = $(`#reviews_${placeId}`);
 
         if (toggleBtn.text() === 'show') {
             // Fetch and display reviews
-            $.get('http://0.0.0.0:5001/api/v1/reviews/', function (data) {
+            $.get(`http://0.0.0.0:5001/api/v1/places/${placeId}/reviews/`, function (data) {
+                reviewsList.empty();
                 for (const review of data) {
                     const reviewHTML = `
                         <li>
-                            <h3>From ${review.user.first_name} ${review.user.last_name}</h3>
+                            <h3>From User ID: ${review.user_id}</h3>
                             <p>${review.text}</p>
                         </li>
                     `;
